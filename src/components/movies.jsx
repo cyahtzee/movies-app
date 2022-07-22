@@ -8,8 +8,6 @@ class Movies extends Component {
    }
 
   render() {
-    console.log(this.state.movies);
-
     return (
       <React.Fragment>
         <table className="table">

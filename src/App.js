@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Counter from './components/counter';
-import Navbar from './components/navbarComponent';
+import Counters from './components/counters';
+import Navbar from './components/navbar';
 import Movies from './components/movies';
 
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <main className="container m-2">
         <Navbar />
-        <Counter />
+        <Counters />
         <Movies />
       </main>
         );
