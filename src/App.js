@@ -6,12 +6,15 @@ import Movies from './components/movies';
 class App extends Component {
   render() {
     return (
-      <main className="container m-2">
+      <React.Fragment>
         <Navbar />
-        <Counters />
-        <Movies />
-      </main>
-        );
+        <div className="container">
+          <main className="container m-2">
+            <Movies />
+          </main>
+        </div>
+      </React.Fragment>
+    );
   }
 }
 

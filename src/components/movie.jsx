@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-
 class Movie extends Component {
-  state = {  }
   render() {
+    const { movie, onDelete } = this.props;
+
     return (
       <React.Fragment>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+        <tr key={movie._id}>
+          <td>{movie.title}</td>
+          <td>{movie.genre.name}</td>
+          <td>{movie.numberInStock}</td>
+          <td>{movie.dailyRentalRate}</td>
+          <td><button onClick={() => onDelete(movie._id)} className='btn btn-danger'>DELETE</button></td>
         </tr>
       </React.Fragment>
     );

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import Movie from './movie';
 import { getMovies } from '../services/fakeMovieService';
+import Pagination from './pagination';
+import { paginate } from '../utils/paginate';
 
 class Movies extends Component {
   state = {
-    movies: getMovies()
+    movies: getMovies(),
+    itemsPerPage: 4,
+    currentPage: 1
    }
 
   render() {
@@ -21,26 +25,27 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map(movie => (
-              <tr key={movie._id}>
-                <td>{movie.title}</td>
-                <td>{movie.genre.name}</td>
-                <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
-                <td><button onClick={() => this.onDelete(movie._id)} className='btn btn-danger'>DELETE</button></td>
-              </tr>
+            {paginate(this.state.movies, this.state.currentPage, this.state.itemsPerPage).map(movie => (
+              <Movie key={movie._id}
+                     movie={movie}
+                     onDelete={this.handleDelete } />
           ))}
           </tbody>
         </table>
-      </React.Fragment>
+        <Pagination
+          itemsCount={this.state.movies.length}
+          itemsPerPage={this.state.itemsPerPage}
+          currentPage={this.state.currentPage}
+          onPageChange={this.handlePageChange} />
+        </React.Fragment>
     );
   }
 
-  onDelete = (id) => {
-    this.handleDelete(id);
+  handlePageChange = (pageNumber) => {
+    this.setState({ currentPage: pageNumber });
   }
 
-  handleDelete = (id) => {
+  handleDelete = id => {
     let movies = this.state.movies.filter(movie => movie._id !== id);
     this.setState({ movies });
   }

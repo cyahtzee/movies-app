@@ -10,6 +10,7 @@ class Counters extends Component {
       { id: 4, value: 0 }
     ]
   }
+
   render() {
     return (
       <div className="d-flex justify-content-start w-25">
