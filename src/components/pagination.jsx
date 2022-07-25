@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 
  const Pagination = (props) => {
     const { itemsCount, itemsPerPage, onPageChange, currentPage } = props;
@@ -24,6 +25,13 @@ import { nanoid } from 'nanoid';
         </nav>
       </React.Fragment>
     );
+}
+
+Pagination.propTypes = {
+  itemsCount: PropTypes.number.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired
 }
 
 export default Pagination;

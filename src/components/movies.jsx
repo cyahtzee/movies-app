@@ -12,6 +12,8 @@ class Movies extends Component {
    }
 
   render() {
+    const { movies, itemsPerPage, currentPage } = this.state;
+
     return (
       <React.Fragment>
         <table className="table">
@@ -25,7 +27,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {paginate(this.state.movies, this.state.currentPage, this.state.itemsPerPage).map(movie => (
+            {paginate(movies, currentPage, itemsPerPage).map(movie => (
               <Movie key={movie._id}
                      movie={movie}
                      onDelete={this.handleDelete } />
