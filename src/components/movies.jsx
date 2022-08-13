@@ -74,19 +74,31 @@ class Movies extends Component {
     this.setState({ movies });
   }
 
-  handleSort = (property) => {
-    switch (property) {
+  setSortColumn = path => {
+    const sortColumn = { ...this.state.sortColumn };
+
+    if (sortColumn.path === path)
+      sortColumn.order = this.state.sortColumn.order === 'asc' ? 'desc' : 'asc';
+    else {
+      sortColumn.order = 'asc';
+      sortColumn.path = path;
+    }
+    this.setState({ sortColumn });
+  };
+
+  handleSort = (path) => {
+    switch (path) {
       case 'Title':
-        this.setState({sortColumn: { path: 'title', order: 'asc'}})
+        this.setSortColumn('title')
         break;
         case 'Genre':
-        this.setState({sortColumn: { path: 'genre', order: 'asc'}})
+        this.setSortColumn('genre.name')
         break;
         case 'Stock':
-          this.setState({sortColumn: { path: 'numberInStock', order: 'asc'}})
+          this.setSortColumn('numberInStock')
           break;
           case 'Rate':
-        this.setState({sortColumn: { path: 'dailyRentalRate', order: 'asc'}})
+        this.setSortColumn('dailyRentalRate')
         break;
       default:
         break;

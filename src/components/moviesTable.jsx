@@ -9,9 +9,9 @@ const MoviesTable = (props) => {
       <table className="table">
         <thead>
           <tr>
-            {headers.map(property => <th key={property}
-                                       onClick={() => onSort(property) }>
-                                    {property}</th>)}
+            {headers.map(path => <th key={path}
+                                       onClick={() => onSort(path) }>
+                                    {path}</th>)}
           </tr>
         </thead>
         <tbody>
