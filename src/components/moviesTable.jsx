@@ -2,17 +2,16 @@ import React from 'react';
 import Movie from './movie';
 
 const MoviesTable = (props) => {
-    const { movies, onDelete} = props;
+    const { movies, onDelete, onSort} = props;
+    const headers = ["Title", "Genre", "Stock", "Rate", ""];
 
     return (
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Genre</th>
-            <th scope="col">Stock</th>
-            <th scope="col">Rate</th>
-            <th scope="col"></th>
+            {headers.map(property => <th key={property}
+                                       onClick={() => onSort(property) }>
+                                    {property}</th>)}
           </tr>
         </thead>
         <tbody>

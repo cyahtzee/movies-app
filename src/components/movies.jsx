@@ -5,6 +5,7 @@ import Pagination from './pagination';
 import { paginate } from '../utils/paginate';
 import GenresList from './genresList';
 import { getGenres } from '../services/fakeGenreService';
+import _ from 'lodash';
 
 
 class Movies extends Component {
@@ -13,7 +14,8 @@ class Movies extends Component {
     itemsPerPage: 4,
     currentPage: 1,
     genres: [],
-    selectedGenre: false
+    selectedGenre: false,
+    sortColumn: { path: 'title', order: 'asc' }
    }
 
   componentDidMount() {
@@ -22,9 +24,10 @@ class Movies extends Component {
   }
 
   render() {
-    const { movies: allMovies, itemsPerPage, currentPage, genres, selectedGenre } = this.state;
+    const { movies: allMovies, itemsPerPage, currentPage, genres, selectedGenre, sortColumn } = this.state;
     const filteredMovies = selectedGenre ? this.filterMovies(allMovies, selectedGenre) : allMovies;
-    const movies = paginate(filteredMovies, currentPage, itemsPerPage);
+    const sortedMovies = _.orderBy(filteredMovies, [sortColumn.path], [sortColumn.order]);
+    const movies = paginate(sortedMovies, currentPage, itemsPerPage);
 
     return (
       <div className='row'>
@@ -36,7 +39,8 @@ class Movies extends Component {
         <div className="col-10">
           <MoviesTable
             movies={movies}
-            onDelete={this.handleDelete} />
+            onDelete={this.handleDelete}
+            onSort={this.handleSort} />
           <Pagination
             itemsCount={filteredMovies.length}
             itemsPerPage={itemsPerPage}
@@ -68,6 +72,25 @@ class Movies extends Component {
   handleDelete = movie => {
     const movies = this.state.movies.filter(m => m._id !== movie._id);
     this.setState({ movies });
+  }
+
+  handleSort = (property) => {
+    switch (property) {
+      case 'Title':
+        this.setState({sortColumn: { path: 'title', order: 'asc'}})
+        break;
+        case 'Genre':
+        this.setState({sortColumn: { path: 'genre', order: 'asc'}})
+        break;
+        case 'Stock':
+          this.setState({sortColumn: { path: 'numberInStock', order: 'asc'}})
+          break;
+          case 'Rate':
+        this.setState({sortColumn: { path: 'dailyRentalRate', order: 'asc'}})
+        break;
+      default:
+        break;
+    }
   }
 }
 
