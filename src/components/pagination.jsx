@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
             {pages.map(page => <li className={page === currentPage ? "page-item active" : "page-item"}
                                    key={nanoid()}
                                    onClick={() => onPageChange(page)}>
-              <a class="page-link">{page}</a></li>)}
+              <a className="page-link">{page}</a></li>)}
             <li className="page-item">
               <a className="page-link">Next</a>
             </li>

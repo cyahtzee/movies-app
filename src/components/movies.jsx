@@ -1,45 +1,49 @@
 import React, { Component } from 'react';
-import Movie from './movie';
+import MoviesTable from './moviesTable';
 import { getMovies } from '../services/fakeMovieService';
 import Pagination from './pagination';
 import { paginate } from '../utils/paginate';
+import GenresList from './genresList';
+import { getGenres } from '../services/fakeGenreService';
+
 
 class Movies extends Component {
   state = {
-    movies: getMovies(),
+    movies: [],
     itemsPerPage: 4,
-    currentPage: 1
+    currentPage: 1,
+    genres: [],
+    selectedGenre: false
    }
 
+  componentDidMount() {
+    const genres = [{ name: 'All Gneres' }, ...getGenres()];
+    this.setState({ movies: getMovies(), genres });
+  }
+
   render() {
-    const { movies, itemsPerPage, currentPage } = this.state;
+    const { movies: allMovies, itemsPerPage, currentPage, genres, selectedGenre } = this.state;
+    const filteredMovies = selectedGenre ? this.filterMovies(allMovies, selectedGenre) : allMovies;
+    const movies = paginate(filteredMovies, currentPage, itemsPerPage);
 
     return (
-      <React.Fragment>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Genre</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Rate</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginate(movies, currentPage, itemsPerPage).map(movie => (
-              <Movie key={movie._id}
-                     movie={movie}
-                     onDelete={this.handleDelete } />
-          ))}
-          </tbody>
-        </table>
-        <Pagination
-          itemsCount={this.state.movies.length}
-          itemsPerPage={this.state.itemsPerPage}
-          currentPage={this.state.currentPage}
-          onPageChange={this.handlePageChange} />
-        </React.Fragment>
+      <div className='row'>
+        <div className="col-2">
+          < GenresList genres={genres}
+                       onItemSelect={this.handleSelect}
+                       selectedGenre={selectedGenre}/>
+        </div>
+        <div className="col-10">
+          <MoviesTable
+            movies={movies}
+            onDelete={this.handleDelete} />
+          <Pagination
+            itemsCount={filteredMovies.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={this.state.currentPage}
+            onPageChange={this.handlePageChange} />
+        </div>
+      </div>
     );
   }
 
@@ -47,10 +51,25 @@ class Movies extends Component {
     this.setState({ currentPage: pageNumber });
   }
 
-  handleDelete = id => {
-    let movies = this.state.movies.filter(movie => movie._id !== id);
+  // handleDelete = id => {
+  //   let movies = this.state.movies.filter(movie => movie._id !== id);
+  //   this.setState({ movies });
+  // }
+
+  handleSelect = genre => {
+    this.setState({ selectedGenre: genre, currentPage: 1 });
+  }
+
+  filterMovies = () => {
+    const { selectedGenre } = this.state;
+    return selectedGenre && selectedGenre._id ? getMovies().filter(movie => movie.genre._id === selectedGenre._id) : getMovies();
+  }
+
+  handleDelete = movie => {
+    const movies = this.state.movies.filter(m => m._id !== movie._id);
     this.setState({ movies });
   }
 }
+
 
 export default Movies;

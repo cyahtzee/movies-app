@@ -10,7 +10,7 @@ class App extends Component {
         <Navbar />
         <div className="container">
           <main className="container m-2">
-            <Movies />
+            < Movies />
           </main>
         </div>
       </React.Fragment>

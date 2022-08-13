@@ -10,7 +10,7 @@ class Movie extends Component {
           <td>{movie.genre.name}</td>
           <td>{movie.numberInStock}</td>
           <td>{movie.dailyRentalRate}</td>
-          <td><button onClick={() => onDelete(movie._id)} className='btn btn-danger'>DELETE</button></td>
+          <td><button onClick={() => onDelete(movie)} className='btn btn-danger'>DELETE</button></td>
         </tr>
       </React.Fragment>
     );
