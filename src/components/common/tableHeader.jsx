@@ -9,9 +9,9 @@ class TabelHeader extends Component {
     return (
       <thead>
         <tr>
-          {columns.map(column => <th key={nanoid()}
+          {columns.map(column => column.path && <th className="clickable" key={nanoid()}
                                       onClick={() => this.raiseSort(column) }>
-                                  {column.label}</th>)}
+                                  {column.label} {this.renderIcon(column)}</th>)}
         </tr>
     </thead>
     );
@@ -28,6 +28,18 @@ class TabelHeader extends Component {
     }
     this.props.onSort(sortColumn);
   };
+
+  renderIcon = column => {
+    const { sortColumn } = this.props;
+
+    if (column.path !== sortColumn.path) return null;
+
+    if (sortColumn.order === 'asc')
+      return <i className='fa fa-sort-asc' />;
+    else {
+      return <i className='fa fa-sort-desc' />;
+    }
+  }
 }
 
 export default TabelHeader;
