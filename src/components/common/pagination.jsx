@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
     const { itemsCount, itemsPerPage, onPageChange, currentPage } = props;
     const totalPages = Math.ceil(itemsCount / itemsPerPage);
     const pages = _.range(1, totalPages + 1);
+
     return (
       <React.Fragment>
         <nav aria-label="page navigation">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
 
 
 class TabelHeader extends Component {
@@ -8,7 +9,7 @@ class TabelHeader extends Component {
     return (
       <thead>
         <tr>
-          {columns.map(column => <th key={column.label}
+          {columns.map(column => <th key={nanoid()}
                                       onClick={() => this.raiseSort(column) }>
                                   {column.label}</th>)}
         </tr>
