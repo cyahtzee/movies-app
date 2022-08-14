@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import MoviesTable from './moviesTable';
 import { getMovies } from '../services/fakeMovieService';
-import Pagination from './pagination';
+import Pagination from './common/pagination';
 import { paginate } from '../utils/paginate';
-import GenresList from './genresList';
+import GenresList from './common/genresList';
 import { getGenres } from '../services/fakeGenreService';
 import _ from 'lodash';
-
 
 class Movies extends Component {
   state = {
@@ -39,6 +38,7 @@ class Movies extends Component {
         <div className="col-10">
           <MoviesTable
             movies={movies}
+            sortColumn={sortColumn}
             onDelete={this.handleDelete}
             onSort={this.handleSort} />
           <Pagination
@@ -55,11 +55,6 @@ class Movies extends Component {
     this.setState({ currentPage: pageNumber });
   }
 
-  // handleDelete = id => {
-  //   let movies = this.state.movies.filter(movie => movie._id !== id);
-  //   this.setState({ movies });
-  // }
-
   handleSelect = genre => {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   }
@@ -74,35 +69,8 @@ class Movies extends Component {
     this.setState({ movies });
   }
 
-  setSortColumn = path => {
-    const sortColumn = { ...this.state.sortColumn };
-
-    if (sortColumn.path === path)
-      sortColumn.order = this.state.sortColumn.order === 'asc' ? 'desc' : 'asc';
-    else {
-      sortColumn.order = 'asc';
-      sortColumn.path = path;
-    }
+  handleSort = sortColumn => {
     this.setState({ sortColumn });
-  };
-
-  handleSort = (path) => {
-    switch (path) {
-      case 'Title':
-        this.setSortColumn('title')
-        break;
-        case 'Genre':
-        this.setSortColumn('genre.name')
-        break;
-        case 'Stock':
-          this.setSortColumn('numberInStock')
-          break;
-          case 'Rate':
-        this.setSortColumn('dailyRentalRate')
-        break;
-      default:
-        break;
-    }
   }
 }
 
