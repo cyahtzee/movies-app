@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import Counters from './components/counters';
 import Navbar from './components/navbar';
 import Movies from './components/movies';
+import Counters from './components/counters';
+import NotFound from './components/errors/notFound';
+import MovieDetails from './components/movieDetails';
+import { Routes, Route  } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
       <React.Fragment>
         <Navbar />
-        <div className="container">
-          <main className="container m-2">
-            < Movies />
-          </main>
-        </div>
+        <main className="container">
+          <Routes>
+            <Route path="/counters" element={<Counters />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/movies/:id" element={<MovieDetails />} />
+            <Route path='/*' element={<NotFound />} />
+          </Routes>
+        </main>
       </React.Fragment>
     );
   }

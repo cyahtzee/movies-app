@@ -29,24 +29,28 @@ class Movies extends Component {
     const movies = paginate(sortedMovies, currentPage, itemsPerPage);
 
     return (
-      <div className='row'>
-        <div className="col-2">
-          < GenresList genres={genres}
-                       onItemSelect={this.handleSelect}
-                       selectedGenre={selectedGenre}/>
-        </div>
-        <div className="col-10">
-          <MoviesTable
-            movies={movies}
-            sortColumn={sortColumn}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort} />
-          <Pagination
-            itemsCount={filteredMovies.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={this.state.currentPage}
-            onPageChange={this.handlePageChange} />
-        </div>
+      <div className="container">
+        <main className="container m-2">
+          <div className='row'>
+            <div className="col-2">
+              < GenresList genres={genres}
+                          onItemSelect={this.handleSelect}
+                          selectedGenre={selectedGenre}/>
+            </div>
+            <div className="col-10">
+              <MoviesTable
+                movies={movies}
+                sortColumn={sortColumn}
+                onDelete={this.handleDelete}
+                onSort={this.handleSort} />
+              <Pagination
+                itemsCount={filteredMovies.length}
+                itemsPerPage={itemsPerPage}
+                currentPage={this.state.currentPage}
+                onPageChange={this.handlePageChange} />
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
